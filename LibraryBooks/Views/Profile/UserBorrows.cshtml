@@ -1,0 +1,84 @@
+﻿@model LibraryBooks.Models.Profile.UserBorrowsViewModel;
+
+@{
+    ViewBag.Title = "Список выданных книг пользователю " + @Model.GetUserName();
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4">Список выданных книг пользователю @Model.GetUserName()</h2>
+
+    <div class="form-group mb-3">
+        <input type="text" id="SearchQuery" class="form-control" placeholder="Поиск по названию книги">
+    </div>
+
+    <div id="noBooksFound" class="alert alert-warning" role="alert" style="display: none;">
+        Книг, соответствующих запросу, не найдено.
+    </div>
+
+    <table class="table table-striped table-hover" id="borrowList">
+        <thead>
+            <tr>
+                <th scope="col">Книга</th>
+                <th scope="col">Дата выдачи</th>
+                <th scope="col">Дата возврата</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.UserBorrows != null && Model.UserBorrows.Any())
+            {
+                @foreach (var borrow in Model.UserBorrows)
+                {
+                    if (borrow != null)
+                    {
+                        <tr>
+                            <td>
+                                <a href="@Url.Action("Details", "Books", new { bookId = borrow?.Book?.Id })" style="text-decoration: none; color: inherit;">@borrow.Book.Title</a> <!--- Добавляем ссылку на страницу книги -->
+                            </td>
+                            <td>@borrow.BorrowDate.ToString("dd.MM.yyyy")</td>
+                            <td>@(borrow.ReturnDate.HasValue ? borrow.ReturnDate.Value.ToString("dd.MM.yyyy") : "Не возвращена")</td>
+                        </tr>
+                    }
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="4" class="text-center">У пользователя нет выданных книг.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script>
+    const searchQueryInput = document.getElementById("SearchQuery");
+    const borrowList = document.getElementById("borrowList");
+    const noBooksFoundMessage = document.getElementById("noBooksFound");
+
+    function updateBorrowList() {
+        const searchTerm = searchQueryInput.value.toLowerCase();
+
+        const rows = Array.from(borrowList.querySelectorAll("tbody tr"));
+        let hasMatches = false; // Флаг для проверки, есть ли совпадения
+
+        rows.forEach(row => {
+            const bookTitle = row.querySelector("td:nth-child(1) a").textContent.toLowerCase();
+            if (bookTitle.includes(searchTerm)) {
+                row.style.display = "";
+                hasMatches = true; // Устанавливаем флаг, если есть совпадение
+            } else {
+                row.style.display = "none";
+            }
+        });
+
+        if (hasMatches) {
+            noBooksFoundMessage.style.display = "none"; // Скрываем сообщение, если есть совпадения
+            borrowList.style.display = "";
+        } else {
+            noBooksFoundMessage.style.display = "block"; // Отображаем сообщение, если нет совпадений
+            borrowList.style.display = "none";
+        }
+    }
+
+    searchQueryInput.addEventListener("input", updateBorrowList);
+</script>

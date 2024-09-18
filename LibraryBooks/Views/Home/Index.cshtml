@@ -1,0 +1,60 @@
+﻿@model IEnumerable<LibraryBooks.Models.DbModels.Book>
+@{
+    ViewBag.Title = "Главная";
+}
+
+
+
+
+<div class="container my-5">
+    <div class="row justify-content-center align-items-center">
+        <div class="col-md-8 text-center">
+            <h1 class="display-4 mb-4">Добро пожаловать в нашу библиотеку!</h1>
+            <p class="lead mb-5">Здесь вы найдете множество интересных книг.</p>
+        </div>
+    </div>
+
+    <h3 class="mb-5 text-center">Популярные книги</h3>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-5 g-3">
+
+        @if (Model != null && Model.Any())
+        {
+            foreach (var book in Model)
+            {
+                <div class="col">
+                    <div class="card shadow-sm border-light rounded" style="overflow: hidden;">
+                        <img src="@Url.Content(book.GetImagePathOrDefault())" class="card-img-top" style="object-fit: cover; height: 100%;" alt="@book.Title">  <!-- Уменьшил высоту -->
+                        <div class="card-body p-2">
+    
+                            <h6 class="card-title fw-bold">@book.Title</h6>  
+                            <p class="card-text text-muted" style="font-size: 0.8rem;">Автор: @book.Author</p> 
+                            <a href="@Url.Action("Details", "Books", new { bookId = book.Id })" class="btn btn-outline-primary btn-sm">Подробнее</a> 
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="col-12 text-center">
+                <p class="lead text-muted">Книг в базе данных пока нет.</p>
+            </div>
+        }
+    </div>
+</div>
+
+
+
+
+<style>
+    .card {
+        transition: transform 0.2s ease;
+    }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+</style>

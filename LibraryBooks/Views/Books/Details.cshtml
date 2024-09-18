@@ -1,0 +1,45 @@
+﻿@model LibraryBooks.Models.Books.BookDetailsViewModel
+
+@{
+    ViewBag.Title = $"{Model.Book.Author} - {Model.Book.Title}";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="text-center mb-4">@Model.Book.Title</h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3">
+            <img src="@Url.Content(Model.Book.GetImagePathOrDefault())" class="rounded img-fluid img-thumbnail" alt="@Model.Book.Title" style="max-height: 100%; width: auto;">
+        </div>
+        <div class="col-md-9 px-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title mb-3">Автор: @Model.Book.Author</h5>
+                    <p class="card-text mb-3">
+                        @Model.Book.Description
+                    </p>
+                    <dl class="row mb-3">
+                        <dt class="col-sm-3">Жанр:</dt>
+                        <dd class="col-sm-9">@Model.Book.Genre</dd>
+
+                        <dt class="col-sm-3">ISBN:</dt>
+                        <dd class="col-sm-9">@Model.Book.ISBN</dd>
+
+                        <dt class="col-sm-3">Дата публикации:</dt>
+                        <dd class="col-sm-9">@Model.Book.PublicationDate?.ToString("dd.MM.yyyy")</dd>
+                    </dl>
+                    
+                    @if (User.IsInRole(LibraryBooks.Consts.Role.Admin))
+                    {
+                        <a href="@Url.Action("EditBook", "Admin", new { bookId = Model.Book.Id })" class="btn btn-outline-primary mr-2">Редактировать</a>
+                        <a href="@Url.Action("DeleteBook", "Admin", new { bookId = Model.Book.Id })" class="btn btn-outline-danger">Удалить</a>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

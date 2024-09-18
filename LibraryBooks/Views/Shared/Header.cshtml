@@ -1,0 +1,54 @@
+﻿@model LibraryBooks.Models.Header.HeaderViewModel;
+
+
+@{
+    var currentAction = ViewContext?.RouteData?.Values["Action"]?.ToString();
+    var currentController = ViewContext?.RouteData?.Values["Controller"]?.ToString();
+}
+
+
+@{
+
+    <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between px-2 py-3 mb-4 border-bottom ">
+        
+    <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
+            @*<svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap" /></svg>*@
+            <i class="text-dark bi bi-book "></i>
+        </a>
+
+        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+            @foreach(var menuItem in Model.MenuItems)
+            {
+                <li><a href="@Url.Action(menuItem.Action, menuItem.Controller)" class="nav-link px-2 @((currentAction == menuItem.Action && currentController == menuItem.Controller) ? "link-secondary" : "link-dark")">@menuItem.Title</a></li>
+            }
+            @if (Model.User.Identity != null)
+            {
+                @if (Model.User.Identity.IsAuthenticated && Model.User.IsInRole(LibraryBooks.Consts.Role.Admin))
+                {
+                    @foreach (var menuItem in Model.AdminMenuItems)
+                    {
+                        <li><a href="@Url.Action(menuItem.Action, menuItem.Controller)" class="nav-link px-2 @((currentAction == menuItem.Action && currentController == menuItem.Controller) ? "link-secondary" : "link-dark")">@menuItem.Title</a></li>
+                    }
+                }
+            }
+        </ul>
+
+        @if(Model.User.Identity != null)
+        {
+            @if (Model.User.Identity.IsAuthenticated)
+            {
+                <div class="col-md-3 text-end">
+                    <a href="@Url.Action("Index", "Profile")" class="btn btn-outline-primary me-2">Профиль</a>
+                    <a href="/Account/Logout" class="btn btn-primary">Выйти</a>
+                </div>
+            }
+            else
+            {
+                <div class="col-md-3 text-end">
+                    <a href="@Url.Action("Register", "Account")" class="btn btn-outline-primary me-2">Зарегистрироваться</a>
+                    <a href="@Url.Action("Login", "Account")" class="btn btn-outline-primary">Войти</a>
+                </div>
+            }
+        }
+    </header>
+}

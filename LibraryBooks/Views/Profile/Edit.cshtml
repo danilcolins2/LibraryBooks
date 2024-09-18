@@ -1,0 +1,77 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model LibraryBooks.Models.Profile.EditUserProfileViewModel
+@{
+    ViewBag.Title = "Редактировать профиль";
+}
+
+
+<div class="container mt-5 overflow-hidden">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="pb-5 col">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center" style="min-height: 54.4px;">
+                            <h5 class="card-title">Информация о пользователе</h5>
+                        </div>
+                    <div class="card-body">
+                            <form class="needs-modal" action="/Profile/Edit" method="post" enctype="multipart/form-data">
+                            <div class="row justify-content-center">
+                                <div class="col-md-5 clearfix">
+                                    <div class="py-3 d-flex justify-content-center">
+                                        <div class="rounded-circle d-flex align-items-center justify-content-center " style="max-width: 150px; height: 150px; overflow: hidden;">
+                                                <img src="@Url.Content(Model.User?.GetImagePathOrDefault())" class="img-fluid" style="object-fit: cover; width: 150px; height: 150px;" alt="@Model.User?.FirstName">
+                                        </div>
+                                    </div>
+                                    <ul class="py-3 list-group list-group-flush">
+                                        <li class="list-group-item align-items-center">
+                                            <div class="mb-3">
+                                                    <input class="form-control" type="file" id="formFile" name="formFile" accept="image/*">
+                                                    <div class="invalid-feedback">
+                                                        Неверный формат файла
+                                                    </div>
+                                                </div>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            Имя:
+                                            <span class="text-secondary">
+                                                <input type="text" class="form-control  text-secondary border border-radius-sm" id="firstName" name="firstName" value="@Model.FirstName" required style="text-align: right; padding-right: 10px; width: 230px">
+                                                    <div class="invalid-feedback">
+                                                        Введите имя
+                                                    </div>
+                                            </span>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            Фамилия:
+                                            <span class="text-secondary">
+                                                <input type="text" class="form-control  text-secondary border border-radius-sm" id="lastName" name="lastName" value="@Model.LastName" required style="text-align: right; padding-right: 10px; width: 230px">
+                                            </span>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            Email:
+                                            <span class="text-secondary">
+                                                <input type="text" class="form-control  text-secondary border border-radius-sm" id="email" name="email" value="@Model.Email" required style="text-align: right; padding-right: 10px; width: 230px">
+                                            </span>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            Пароль:
+                                            <span class="text-secondary">
+                                                <input type="text" class="form-control  text-secondary border border-radius-sm" id="password" name="password" value="@Model.Password" required style="text-align: right; padding-right: 10px; width: 230px">
+                                            </span>
+                                        </li>
+                                    </ul>
+                                        <div class="px-3 pb-4 d-grid gap-2 mt-3">
+                                            <button type="submit" class=" btn btn-outline-success" style="width: 100%">Сохранить изменения</button>
+                                            <a href="javascript:history.back()" class="btn btn-secondary mt-3" style="width: 100%">Вернуться назад</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

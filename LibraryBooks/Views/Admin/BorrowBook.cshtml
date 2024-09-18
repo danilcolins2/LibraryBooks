@@ -1,0 +1,85 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model LibraryBooks.Models.Admin.BorrowBookViewModel;
+
+@{
+    ViewBag.Title = "Выдача книги";
+}
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <h2>Выдача книги</h2>
+
+            <form action="/Admin/BorrowBook" method="post">
+                <input type="hidden" name="UserId" value="@Model.UserId" />
+
+                <div class="form-group mb-3">
+                    <label for="SearchQuery" class="form-label">Поиск по названию:</label>
+                    <input type="text" id="SearchQuery" name="SearchQuery" class="form-control" placeholder="Введите название книги">
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="SelectedBookId" class="form-label">Выберите книгу:</label>
+                    <select name="SelectedBookId" id="SelectedBookId" class="form-select">
+                        @if (Model.Books != null && Model.Books.Any())
+                        {
+                            @foreach (var book in Model.Books)
+                            {
+                                <option value="@book.Id">@book.Author - @book.Title</option>
+                            }
+                        }
+                        else
+                        {
+                            <option value="" disabled>Книг в базе нет</option>
+                        }
+                    </select>
+                    <span id="no-books-found" class="text-danger" style="display: none;">Книг по такому запросу не найдено.</span>
+                </div>
+
+                <div class="form-group mt-3">
+                    <button type="submit" class="btn btn-primary" id="submit-button" disabled>Выдать книгу</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    const searchQueryInput = document.getElementById("SearchQuery");
+    const bookSelect = document.getElementById("SelectedBookId");
+    const noBooksFoundMessage = document.getElementById("no-books-found");
+    const submitButton = document.getElementById("submit-button");
+    const originalOptions = Array.from(bookSelect.options); // Сохраняем оригинальные опции
+
+    function updateBookList() {
+        const searchTerm = searchQueryInput.value.toLowerCase();
+        
+
+        if (searchTerm == '') { // Если строка поиска пуста, отображаем все книги
+            bookSelect.innerHTML = '';
+            originalOptions.forEach(option => bookSelect.add(option));
+            noBooksFoundMessage.style.display = 'none';
+            submitButton.disabled = false;
+            return;
+        }
+
+        const filteredOptions = originalOptions.filter(option => {
+            return option.text.toLowerCase().includes(searchTerm);
+        });
+
+        bookSelect.innerHTML = '';
+        if (filteredOptions.length > 0) {
+            filteredOptions.forEach(option => bookSelect.add(option));
+            noBooksFoundMessage.style.display = 'none';
+            submitButton.disabled = false;
+        } else {
+            noBooksFoundMessage.style.display = 'block';
+            submitButton.disabled = true;
+        }
+    }
+
+    searchQueryInput.addEventListener("input", updateBookList);
+    bookSelect.addEventListener('change', () => {
+        submitButton.disabled = bookSelect.value === '';
+    });
+</script>

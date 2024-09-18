@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="C:\Users\Даниил Варежкин\source\repos\LibraryBooks\LibraryBooks\library.db" readonly="0" foreign_keys="1" case_sensitive_like="0" temp_store="0" wal_autocheckpoint="1000" synchronous="2"/><attached/><window><main_tabs open="structure browser pragmas query" current="0"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="125"/><column_width id="3" width="3596"/><column_width id="4" width="0"/><expanded_item id="0" parent="1"/><expanded_item id="1" parent="1"/><expanded_item id="2" parent="1"/><expanded_item id="3" parent="1"/></tab_structure><tab_browse><current_table name="4,5:mainBooks"/><default_encoding codec=""/><browse_table_settings/></tab_browse><tab_sql><sql name="SQL 1">INSERT INTO Users (Login, FirstName, LastName, Email, Password, Role, ImageFileId) VALUES
+('user1', 'Иван', 'Иванов', 'ivan.ivanov@example.com', 'password123', 'user', NULL),
+('user2', 'Мария', 'Петрова', 'maria.petrova@example.com', 'pass1234', 'user', NULL),
+('user3', 'Алексей', 'Сидоров', 'alexey.sidirov@example.com', 'securepassword', 'user', NULL),
+('user4', 'Ольга', 'Козлова', 'olga.kozlova@example.com', 'mypassword', 'user', NULL),
+('user5', 'Дмитрий', 'Смирнов', 'dmitry.smirnov@example.com', 'password5', 'user', NULL),
+('user6', 'Екатерина', 'Кузнецова', 'ekaterina.kuznecova@example.com', 'secret', 'user', NULL),
+('user7', 'Сергей', 'Соколов', 'sergey.sokolov@example.com', 'password1', 'user', NULL),
+('user8', 'Анна', 'Воробьева', 'anna.vorobieva@example.com', '123456', 'user', NULL),
+('user9', 'Максим', 'Попов', 'maxim.popov@example.com', 'password777', 'user', NULL),
+('user10', 'Елена', 'Михайлова', 'elena.mikhailova@example.com', 'qwerty', 'user', NULL);</sql><current_tab id="0"/></tab_sql></sqlb_project>

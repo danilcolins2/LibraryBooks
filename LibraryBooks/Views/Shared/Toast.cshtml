@@ -1,0 +1,34 @@
+﻿@model LibraryBooks.Models.Shared.ToastViewModel;
+
+@{
+    if(Model != null && Model.Toasts.Any())
+    {
+        <div class="toast-container position-fixed top-0 start-50 translate-middle-x p-3" style="z-index: 10">
+            @foreach (var toast in Model.Toasts)
+            {
+                <div class="toast align-items-center text-@toast.TextColor.ToString().ToLower() bg-@toast.BackgroundColor.ToString().ToLower() border-0" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="5000">
+                    <div class="d-flex">
+                        <div class="toast-body">
+                            @toast.Message
+                        </div>
+                        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <script>
+            window.onload = function () {
+                const toastElements = document.querySelectorAll('.toast');
+
+                let delay = 50; // Задержка в миллисекундах (0.2 секунды)
+                toastElements.forEach((toastEl, index) => {
+                    setTimeout(() => {
+                        const toast = new bootstrap.Toast(toastEl);
+                        toast.show();
+                    }, delay * index);
+                });
+            };
+        </script>
+    }
+}

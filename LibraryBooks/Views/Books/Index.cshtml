@@ -1,0 +1,76 @@
+﻿@model LibraryBooks.Models.Books.BooksViewModel
+
+@{
+    ViewBag.Title = "Список книг";
+}
+
+
+<div class="container mt-4">
+    <h1>Список книг</h1>
+
+    <form method="get" asp-action="Index" id="searchForm">
+        <div class="input-group mb-3">
+            <input type="hidden" name="page" value="@Model.SearchQuery"/>
+            <input type="text" class="form-control" name="searchQuery" placeholder="Поиск книг..." value="@Model.SearchQuery">
+            <button class="btn btn-outline-secondary" type="submit">Искать</button>
+        </div>
+    </form>
+
+    <div class="row">
+        @if (Model.Books != null && Model.Books.Any())
+        {
+            @foreach (var book in Model.Books)
+            {
+                <div class="col-md-12 mb-4">
+                    <div class="card h-100">
+                        <div class="row g-0">
+                            <div class="col-md-2 px-1 py-1">
+                                <img src="@Url.Content(book.GetImagePathOrDefault())" class="img-fluid rounded-start" style="object-fit: cover; width: 150px; height: 100%;" alt="@book.Title">
+                            </div>
+                            <div class="col-md-10">
+                                <div class="card-body">
+                                    <h5 class="card-title">@book.Title</h5>
+                                    <h6 class="card-title">Автор: @book.Author</h6>
+                                    <p class="card-text">@book.Description</p>
+                                    <a href="@Url.Action("Details",  new { bookId = book.Id })" class="btn btn-primary">Подробнее</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+
+    @if (Model.CountPages > 1)
+    {
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                @for (int i = 1; i <= Model.CountPages; i++)
+                {
+                    <li class="page-item @(i == Model.Page ? "active" : "")">
+                        <button class="page-link" type="button" onclick="submitFormWithPage(@i)">@i</button>
+                    </li>
+                }
+            </ul>
+        </nav>
+    }
+
+    @if (Model.CountPages > 0)
+    {
+        <p class="text-center">Страница @Model.Page из @Model.CountPages</p>
+    }
+    else
+    {
+        <div id="noUsersFound" class="alert alert-warning" role="alert">
+            Книг, соответствующих запросу, не найдено.
+        </div>
+    }
+</div>
+
+<script>
+    function submitFormWithPage(page) {
+        document.getElementById("searchForm").elements["page"].value = page;
+        document.getElementById("searchForm").submit();
+    }
+</script>

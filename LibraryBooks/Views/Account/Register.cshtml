@@ -1,0 +1,87 @@
+﻿@model LibraryBooks.Models.Account.RegisterViewModel;
+@using LibraryBooks.Models.Shared;
+@{
+    ViewBag.Title = "Регистрация";
+}
+
+@section Header {
+    @* Сделал пустой, чтобы исключить хедер *@
+}
+
+
+
+<div class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-md-4"> 
+                <h2 class="text-center mb-4">Форма Регистрации</h2>
+                <form method="post" action="/Account/Register" class="needs-validation" novalidate>
+                    <div class="mb-3">
+                        <label for="login" class="form-label">Логин</label>
+                        <input type="text" name="Login" id="login" class="form-control" value="@Model?.Login" required>
+                        <div class="invalid-feedback">
+                            Пожалуйста, введите логин.
+                        </div>
+                    </div>
+
+                
+
+                    <div class="mb-3">
+                        <label for="firstName" class="form-label">Имя</label>
+                    <input type="text" name="FirstName" id="firstName" class="form-control" value="@Model?.FirstName" required>
+                        <div class="invalid-feedback">
+                            Пожалуйста, введите имя.
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="lastName" class="form-label">Фамилия</label>
+                    <input type="text" name="LastName" id="lastName" class="form-control" value="@Model?.LastName" required>
+                        <div class="invalid-feedback">
+                            Пожалуйста, введите фамилию.
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                    <input type="email" name="Email" id="email" class="form-control" value="@Model?.Email" required>
+                        <div class="invalid-feedback">
+                            Пожалуйста, введите корректный email.
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Пароль</label>
+                    <input type="password" name="Password" id="password" class="form-control" value="@Model?.Password" required>
+                        <div class="invalid-feedback">
+                            Пожалуйста, введите пароль.
+                        </div>
+                    </div>
+
+                    <div class="accordion mt-4" id="accordionExample">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingOne">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                    Специальный код
+                                </button>
+                            </h2>
+                            <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    <input name="SpeciaСode" id="specialcode" type="text" class="form-control" placeholder="Введите специальный код">
+                                </div>
+                            </div>
+                        </div>
+                </div><p class="text-center mt-3">
+                    <a href=@Url.Action("Login") class="btn btn-link" style="text-decoration: none; ">У меня уже есть аккаунт</a>
+                </p>
+                    <div class="mb-3">
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+

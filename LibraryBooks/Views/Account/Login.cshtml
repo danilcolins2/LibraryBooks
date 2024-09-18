@@ -1,0 +1,70 @@
+﻿@model LibraryBooks.Models.Account.LoginViewModel
+@{
+    ViewBag.Title = "Вход";
+}
+
+@section Header {
+    @* Сделал пустой, чтобы исключить хедер *@
+}
+
+
+
+<div class="container my-5 " style="min-height: 70vh;">
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+            <!-- Добавлено обертывание в колонку -->
+            <h2 class="text-center mb-4">Форма Входа</h2>
+            <form method="post" action="/Account/Login" class="needs-validation" novalidate>
+                <div class="mb-3">
+                    <label for="login" class="form-label">Логин</label>
+                    <input type="text" name="Login" id="login" class="form-control" value="@Model?.Login" required>
+                    <div class="invalid-feedback">
+                        Пожалуйста, введите логин.
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="password" class="form-label">Пароль</label>
+                    <input type="password" name="Password" id="password" class="form-control" value="@Model?.Password" required>
+                    <div class="invalid-feedback">
+                        Пожалуйста, введите пароль.
+                    </div>
+                </div>
+
+                <p class="text-center mt-3">
+                    <a href=@Url.Action("Register") class="btn btn-link" style="text-decoration: none; ">У меня нет аккаунта</a>
+                </p>
+
+                <div class="my-3">
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">Войти</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Проверка валидации формы при отправке
+    (function () {
+        'use strict'
+
+        // Получаем все формы с классом "needs-validation"
+        const forms = document.querySelectorAll('.needs-validation')
+
+        // Проходим по каждой форме
+        Array.from(forms).forEach(form => {
+            form.addEventListener('submit', event => {
+                // Проверяем валидность формы
+                if (!form.checkValidity()) {
+                    event.preventDefault()
+                    event.stopPropagation()
+                }
+
+                form.classList.add('was-validated')
+            }, false)
+        })
+    })()
+</script>
+
